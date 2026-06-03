@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Đăng nhập - Sàng Lọc Nhận Thức</title>
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+body { min-height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(-45deg, #667eea, #764ba2, #6dd5ed, #2193b0); background-size: 400% 400%; animation: bg 12s ease infinite; }
+@keyframes bg { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+.box { width: 420px; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.5); padding: 40px 35px; border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); }
+h1 { text-align: center; color: #ffffff; margin-bottom: 25px; font-size: 2em; text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); letter-spacing: 1px; }
+input, select { width: 100%; padding: 14px; margin: 10px 0; background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 12px; color: #333; font-size: 16px; outline: none; transition: 0.3s; }
+input::placeholder { color: #555; }
+input:focus, select:focus { background: rgba(255, 255, 255, 0.95); border-color: #fff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.5); transform: translateY(-2px); }
+button { width: 100%; padding: 14px; border: none; border-radius: 12px; background: linear-gradient(45deg, #0d6efd, #00d2ff); color: white; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: all 0.3s ease; box-shadow: 0 5px 15px rgba(13, 110, 253, 0.4); }
+button:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 25px rgba(13, 110, 253, 0.6); }
+
+/* CSS cho hộp kiểm (Consent checkbox) */
+.consent-group { display: flex; align-items: flex-start; margin-top: 15px; gap: 10px; }
+.consent-group input[type="checkbox"] { width: 22px; height: 22px; margin: 2px 0 0 0; cursor: pointer; accent-color: #0d6efd; }
+.consent-group label { color: white; font-size: 14.5px; line-height: 1.4; cursor: pointer; text-shadow: 0 1px 2px rgba(0,0,0,0.2); text-align: left; }
+
+/* Nút phụ cho trường hợp đã đăng nhập */
+.btn-secondary { background: rgba(255, 255, 255, 0.3); color: white; box-shadow: none; margin-top: 10px; font-size: 16px; }
+.btn-secondary:hover { background: rgba(255, 255, 255, 0.4); box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2); }
+</style>
+</head>
+<body>
+
+<div class="box">
+    <div id="welcomeBackForm" style="display: none; text-align: center;">
+        <h1>Chào mừng trở lại!</h1>
+        <h2 id="welcomeName" style="color: #fff; margin-bottom: 5px; font-size: 1.5em; text-shadow: 0 2px 4px rgba(0,0,0,0.3);"></h2>
+        <p id="welcomeClass" style="color: #eee; margin-bottom: 25px; font-size: 1.1em;"></p>
+        
+        <button onclick="continueLogin()">Tiếp tục tham gia 🚀</button>
+        <button class="btn-secondary" onclick="showNewLogin()">Đăng nhập bằng tài khoản khác</button>
+    </div>
+
+    <div id="newLoginForm">
+        <h1>Đăng Nhập</h1>
+        <input type="text" id="name" placeholder="Họ và tên" required>
+        <input type="number" id="age" placeholder="Tuổi (11-15 tuổi)" required>
+        <input type="text" id="school" placeholder="Tên trường" required>
+        <input type="text" id="class" placeholder="Lớp (chỉ dành từ lớp 6-9)" required>
+        <select id="gender">
+            <option value="Nam">Nam</option>
+            <option value="Nữ">Nữ</option>
+        </select>
+        
+        <div class="consent-group">
+            <input type="checkbox" id="consent">
+            <label for="consent">Tôi hiểu rõ đây là công cụ hỗ trợ đánh giá nhận thức và đồng ý tham gia.</label>
+        </div>
+
+        <button onclick="login()">Bắt đầu ngay 🚀</button>
+    </div>
+</div>
+
+<script>
+// Kiểm tra trạng thái đăng nhập khi vừa tải trang
+document.addEventListener('DOMContentLoaded', () => {
+    let savedUser = localStorage.getItem("user");
+    if(savedUser) {
+        let user = JSON.parse(savedUser);
+        document.getElementById('newLoginForm').style.display = 'none';
+        document.getElementById('welcomeBackForm').style.display = 'block';
+        document.getElementById('welcomeName').textContent = user.name;
+        document.getElementById('welcomeClass').textContent = "Lớp: " + user.class + " - " + user.school;
+    }
+});
+
+// Chuyển thẳng tới trang chủ nếu chọn tiếp tục
+function continueLogin() {
+    window.location.href = "Code/trangchu.html";
+}
+
+// Xóa dữ liệu cũ và mở lại form đăng nhập mới
+function showNewLogin() {
+    localStorage.removeItem("user");
+    document.getElementById('welcomeBackForm').style.display = 'none';
+    document.getElementById('newLoginForm').style.display = 'block';
+}
+
+function login(){
+    let user = {
+        name: document.getElementById("name").value.trim(),
+        age: document.getElementById("age").value.trim(),
+        school: document.getElementById("school").value.trim(),
+        class: document.getElementById("class").value.trim(),
+        gender: document.getElementById("gender").value
+    };
+
+    if(user.name == "" || user.age == "" || user.school == "" || user.class == ""){
+        alert("⚠️ Vui lòng nhập đầy đủ thông tin!"); return;
+    }
+
+    let userAge = parseInt(user.age, 10);
+    if(userAge < 11 || userAge > 15) {
+        alert("⚠️ Không được phép tham gia khi không thuộc lứa tuổi THCS (11-15 tuổi)!"); return;
+    }
+
+    let userClass = parseInt(user.class, 10);
+    if(isNaN(userClass) || userClass < 6 || userClass > 9) {
+        alert("⚠️ Không được phép tham gia! Chỉ dành cho học sinh thuộc cấp THCS (từ lớp 6 đến lớp 9)."); return;
+    }
+
+    // Kiểm tra tick ô đồng ý
+    if(!document.getElementById("consent").checked) {
+        alert("⚠️ Bạn cần xác nhận đồng ý tham gia ở hộp kiểm phía trên nút Bắt đầu!"); return;
+    }
+
+    // Lưu thông tin vào bộ nhớ đệm
+    localStorage.setItem("user", JSON.stringify(user));
+
+    // Đi vào thư mục Code để mở trang chủ
+    window.location.href = "Code/trangchu.html";
+}
+</script>
+
+</body>
+</html>
