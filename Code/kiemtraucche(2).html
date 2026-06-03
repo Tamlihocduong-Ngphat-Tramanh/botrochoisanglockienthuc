@@ -192,7 +192,7 @@
     </div>
 
     <script>
-        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzEvl6aVq-5K1A65uiVB4xRDoyjxsRj8Jgk-F8kjACXeIO7pRLNgdQLUnwn7b9T4veTtQ/exec"; 
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzYb3nyuT91N9j1ZIbh6lI6av7Y6Nk7ZiwreNNxZgBALidUeulLlapHWla-3Bfbpsz79Q/exec"; 
 
         document.addEventListener('DOMContentLoaded', () => {
             const playApplauseSound = () => { try { const ctx = new (window.AudioContext || window.webkitAudioContext)(); const bufferSize = ctx.sampleRate * 2.0; const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate); const data = buffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1; const noise = ctx.createBufferSource(); noise.buffer = buffer; const filter = ctx.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 1000; filter.Q.value = 1.5; const gainNode = ctx.createGain(); gainNode.gain.setValueAtTime(0.4, ctx.currentTime); gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 2.0); noise.connect(filter); filter.connect(gainNode); gainNode.connect(ctx.destination); noise.start(); } catch(e){} };
