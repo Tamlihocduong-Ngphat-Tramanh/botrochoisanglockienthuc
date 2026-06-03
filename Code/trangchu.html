@@ -201,7 +201,7 @@ footer { text-align: center; padding: 20px 0 10px 0; color: rgba(51, 51, 51, 0.8
         <div class="icon-wrapper"><i class="fa-solid fa-star"></i></div> <span class="left-info">Đánh giá trải nghiệm</span>
     </div>
     <div class="left-item leaderboard" onclick="showLeaderboard()">
-        <div class="icon-wrapper"><i class="fa-solid fa-trophy"></i></div> <span class="left-info">Bảng Xếp Hạng</span>
+        <div class="icon-wrapper"><i class="fa-solid fa-trophy"></i></div> <span class="left-info">Bảng Xếp Hạng Tổng Hợp</span>
     </div>
 </div>
 
@@ -217,7 +217,8 @@ footer { text-align: center; padding: 20px 0 10px 0; color: rgba(51, 51, 51, 0.8
 <div class="modal-overlay" id="leaderboardModal">
     <div class="modal-content">
         <i class="fa-solid fa-xmark modal-close" onclick="closeModal('leaderboardModal')"></i>
-        <h3 class="modal-title" style="color: #f39c12;">🏆 Bảng Xếp Hạng Top 10</h3>
+        <h3 class="modal-title" style="color: #f39c12;">🏆 BẢNG XẾP HẠNG TỔNG HỢP TOP 10</h3>
+        <p style="margin-bottom: 15px; color: #555; font-size: 0.9em;"><i>(Điểm trung bình của Game 1, 2, 3 và 5)</i></p>
         <div id="leaderboardContent" style="text-align: left; max-height: 350px; overflow-y: auto;">
             Đang tải dữ liệu...
         </div>
@@ -230,8 +231,9 @@ footer { text-align: center; padding: 20px 0 10px 0; color: rgba(51, 51, 51, 0.8
         <h3 class="modal-title">📘 Giới Thiệu Dự Án</h3>
         
         <div class="intro-text">
-            <p>Ở lứa tuổi trung học cơ sở (THCS), nhiều yếu tố như căng thẳng học tập, thiếu ngủ, xung đột bạn bè hoặc thay đổi nội tiết có thể làm xuất hiện các biểu hiện khó chịu về cảm xúc và suy giảm tạm thời một số chức năng nhận thức (chú ý, trí nhớ, kiểm soát hành vi). Một tỷ lệ rất nhỏ học sinh có thể gặp các “trải nghiệm tâm lý bất thường ở mức sớm” (ví dụ: cảm giác bị quan sát, nghe thấy tiếng gọi thoáng qua, nghi ngờ quá mức) và nếu các trải nghiệm này lặp lại, tăng dần hoặc đi kèm suy giảm học tập thì cần được theo dõi và tư vấn chuyên môn.</p>
-            <p>Đề tài xây dựng bộ 05 trò chơi nhận thức (Memory, Go/No-Go, N-back, Trail Making, Flexibility) phù hợp học sinh THCS nhằm thu thập tự động các chỉ số định lượng (thời gian phản ứng, số lỗi, tỷ lệ bỏ sót/nhấn nhầm…), từ đó tính chỉ số nguy cơ tổng hợp để phân loại 3 mức theo dõi trong nhà trường. Công cụ hướng tới hỗ trợ phòng tư vấn học đường phát hiện sớm nhóm học sinh cần quan tâm, và luôn nhấn mạnh: đây là công cụ sàng lọc hỗ trợ, không phải chẩn đoán; mọi trường hợp mức cao cần được trao đổi với phụ huynh và tham vấn với chuyên gia chuyên khoa khi cần.</p>
+            <p>🎯 <strong>Mục tiêu:</strong> Dự án xây dựng <strong>05 trò chơi nhận thức</strong> (Memory, Go/No-Go, N-back, Trail Making, Flexibility) nhằm hỗ trợ đo lường các chỉ số như thời gian phản ứng, độ chính xác và khả năng tập trung của học sinh Trung học cơ sở (THCS).</p>
+            <p>📊 <strong>Ứng dụng:</strong> Từ kết quả chơi, hệ thống tự động tính toán chỉ số và phân loại nguy cơ suy giảm nhận thức/tâm lý thành 3 mức độ. Qua đó, hỗ trợ phòng tư vấn học đường phát hiện sớm các học sinh cần được quan tâm.</p>
+            <p style="background: rgba(255, 71, 87, 0.1); border-left-color: #ff4757; color: #d63031;">⚠️ <strong>Lưu ý:</strong> Đây chỉ là <em>công cụ sàng lọc hỗ trợ</em>, không thay thế chẩn đoán y khoa. Trường hợp có nguy cơ cao cần được tư vấn chuyên sâu bởi chuyên gia.</p>
 
             <h4 style="color:#0d6efd; margin-top: 25px; margin-bottom: 10px; font-size: 1.2em;">👨‍💻 Thông tin nhóm phát triển</h4>
             <div class="author-info">
@@ -319,7 +321,7 @@ function updateStars(rating) {
 // ==========================================
 // TÍCH HỢP GOOGLE SHEETS
 // ==========================================
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzFppDr7jDnujmriTJY2tYhINQ8vkhsNM9nkQkfws6hmwpBRf7AdSc11DIgUuoxP4tJDA/exec"; 
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyH3Pv8-yCQvcfBcB2LseDGWhRjvbrTU9kMGNmL9hLvdMyxqkvVJd6Sd4T2iITa1CHx7A/exec"; 
 
 function submitFeedback() {
     let general = document.getElementById("fb-general").value;
@@ -362,15 +364,15 @@ function submitRating() {
 }
 
 // ==========================================
-// LOGIC BẢNG XẾP HẠNG
+// LOGIC BẢNG XẾP HẠNG TỔNG HỢP
 // ==========================================
 function showLeaderboard() {
     openModal('leaderboardModal');
     let lbContent = document.getElementById("leaderboardContent");
     lbContent.innerHTML = "<p style='text-align:center;'>🔄 Đang lấy dữ liệu từ hệ thống...</p>";
     
-    // GỌI DATA TỪ GOOGLE SHEETS
-    fetch(SCRIPT_URL + "?action=get_leaderboard")
+    // GỌI DATA TỪ GOOGLE SHEETS BẰNG action=get_total_leaderboard
+    fetch(SCRIPT_URL + "?action=get_total_leaderboard")
         .then(response => response.json())
         .then(data => {
             if (!data || data.length === 0) {
@@ -379,6 +381,7 @@ function showLeaderboard() {
             }
             
             let html = "<ul style='list-style-type: none; padding: 0; font-size: 1.1em; line-height: 1.8;'>";
+            
             // Lấy 10 kết quả đầu tiên trả về
             data.slice(0, 10).forEach((item, index) => {
                 let medal = "";
@@ -390,7 +393,7 @@ function showLeaderboard() {
                 html += `
                     <li style="padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center;">
                         <span>${medal} <b>${item.name}</b></span>
-                        <span style="color: #0d6efd; font-weight: bold;">${item.score}</span>
+                        <span style="color: #0d6efd; font-weight: bold;">Điểm TB: ${item.averageScore}</span>
                     </li>`;
             });
             html += "</ul>";
@@ -420,7 +423,7 @@ document.addEventListener('DOMContentLoaded', () => {
             isMusicPlaying = true;
         }).catch(err => {
             console.log("Không thể phát nhạc:", err);
-            alert("Trình duyệt chặn phát nhạc tự động, vui lòng kiểm tra lại.");
+            alert("Trình duyệt chặn phát nhạc tự động, vui lòng kiểm tra lại (Hãy chắc chắn bạn đã đổi tên file đúng như hướng dẫn).");
         });
     }
 
